@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="//unpkg.com/alpinejs" defer></script>
+</head>
+<body>  
+    <div x-data="start()" class="w-screen h-screen flex justify-center items-center flex-col bg-gradient-to-b from-pink-300 to-white/100">
+        
+        <div class="rounded-lg bg-auto">
+            <img x-bind:src="image_show" class="rounded-lg" style="max-width: 300px; max-height: 300px;" alt="cat">
+        </div>
+        <div class="text-pink-600 pt-4">
+            <h1 class="text-3xl font-bold" x-text="txt"></h1>
+        </div>
+        <div  x-bind:class="yes ? 'hidden' : '' " class="flex justify-center items-center row pt-6 text-white">
+            <div x-on:click="click_yes" x-bind:style="size_b > 2 ? 'width: ' + size_b + 'px; height: ' + size_b + 'px; border-radius: 5px;' : 'width: 50px; height: 50px; border-radius: 5px;' " class="text-center bg-green-500 rounded-lg flex justify-center items-center">
+                <span x-bind:style=" size_b > 2 ? 'font-size:' + font + 'px;' : 'font-size: 15px;' ">Yes</span>
+            </div>
+
+            <span class="pr-3"></span>
+            <div x-on:click="morYes" style=" height: 50px; border-radius: 5px;" class="px-3 text-center w-auto  bg-red-500 flex justify-center items-center" x-text="text_show"></div>
+        </div>
+    </div>
+    <script>
+        function start() {
+            return {
+                size_b: 1,
+                font: 20,
+                text_show: 'No',
+                list_tex: ['Are you sure?', 'Na please.', 'Don\'t do this to me :)', 'You\'re breaking my heart', 'I\'m gon cry...'],
+                yes: false,
+                txt: 'Will you be my Valentine?',
+                imgs: ['images/imag1.jpg', 'images/imag2.jpeg', 'images/imag3.jpeg', 'images/imag4.jpeg', 'images/imag5.jpeg'],
+                image_show: 'images/imag1.jpg',
+                imgYes: 'images/kiss.gif',
+                morYes() {
+                    if (this.size_b > 2) {
+                        this.size_b += 30;
+                        this.font += 15;
+                    } else {
+                        this.size_b = 55;
+                    }
+                    this.chang_text();
+                },
+
+                chang_text() {
+                    const randomIndex = Math.floor(Math.random() * this.list_tex.length);
+                    this.text_show = this.list_tex[randomIndex];
+                    this.image_show = this.imgs[randomIndex];
+                },
+                
+                click_yes () {
+                    this.yes = true;
+                    this.txt = 'Yayyyy!! \:B';
+                    this.image_show = this.imgYes;
+                }
+            };
+        }
+    </script>
+</body>
+</html>
